@@ -1,0 +1,38 @@
+.sign-in-box {
+    position: absolute;
+    left: 60%;
+    top: 20%;
+    border: none;
+    min-width: 20%;
+    border-radius: 5%;
+    background-color: rgba(214, 214, 218, 0.774);
+    text-align: center;
+  }
+
+  #login-button {
+    border: none;
+    background-color: white;
+    border-radius: 10px;
+    margin: 15% 0 30% 0;
+    padding: 1% 10% 1% 9%;
+  }
+
+  #login-button:hover {
+    cursor: pointer;
+  }
+
+  #backgroundimage {
+    width: 1365px;
+    height: 656px;
+  }
+
+  #logo {
+    width: 60px;
+    height: 60px;
+    margin-top: 50px;
+  }
+
+  h2 {
+    margin-top: 10px;
+    font-size: 3rem;
+  }

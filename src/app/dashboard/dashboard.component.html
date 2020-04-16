@@ -1,0 +1,148 @@
+<ng-template #newTaskTemplate>
+  <div class="modal-header" data-backdrop="static">
+    <h4 class="modal-title pull-left">Task Details</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="myFormGroup" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="text">Task Name:  </label>
+        <input type="text" class="form-control" id="taskName" formControlName="taskName">
+      </div>
+      <div class="form-group">
+        <label for="text">Description:  </label>
+        <input type="text" class="form-control" id="taskDescription" formControlName="taskDescription">
+      </div>
+      <div class="col-xs-12 col-12 col-md-4 form-group">
+        <label for="text">Date:</label>
+        <input type="text" bsDatepicker class="form-control" id="taskDate" formControlName="taskDate">
+      </div>
+      <div class="form-group">
+        <label for="text">Assign Task to:  </label>
+        <input type="text" class="form-control" id="taskEmail" placeholder="Enter Google email ID" formControlName="taskEmail">
+      </div>
+      <br>
+      <button id="SubmitTask" type="submit" class="btn btn-success" 
+              [disabled]="!myFormGroup.valid">
+              Submit
+      </button>
+      <button type="button" id="CancelTask" class="btn btn-danger" (click)="modalRef.hide()">Cancel</button>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #deleteTaskTemplate>
+  <div class="modal-header" data-backdrop="static">
+    <h4 class="modal-title pull-left">Delete Task</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to delete?</p>
+    <button id="yes" class="btn btn-success" (click)="modalRef.hide()">Yes</button>
+    <button id="no" class="btn btn-danger" (click)="modalRef.hide()">No</button>
+  </div>
+</ng-template>
+
+
+<app-header></app-header>
+
+<!-- Choose Task Date -->
+<div class="col-xs-12 col-12 col-md-4 form-group">
+    <input id="date" type="text" bsDatepicker (change)="getDate()"
+           placeholder="Choose Task Date" [(ngModel)]="datepickerModel"
+           value="datepickerModel" name="datepickerModel">
+</div>
+
+<!-- <button id="go" class="btn btn-success" (click)="chosenDate()">Go</button> -->
+
+<!-- Show Chosen Task Date -->
+<div class="row">
+  <div class="col-xs-12 col-md-12">
+    <pre class="code-preview">{{datepickerModel}}</pre>
+  </div>
+</div>
+
+<button id="newTask" class="btn btn-success" (click)="newTaskModal(newTaskTemplate)" data-toggle="modal" data-target="#newTaskModal">New Task</button>
+
+<tabset id="tab">
+  <tab heading="Pending" class="mt-2" (selectTab)="onSelect($event)">
+    <h4>Pending Tasks</h4>
+    <div>
+      <table class="table table-hover table-bordered">
+          <thead class="thead-dark">
+              <tr>
+                <th scope="col">Task No:</th>
+                <th scope="col">Task Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Completed</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>
+                  <input type="checkbox">
+                </td>
+                <td>
+                  <a (click)="newTaskModal(newTaskTemplate)" data-toggle="modal" data-target="#newTaskModal"><img src="../../assets/edit.png" data-toggle="tooltip" title="Edit"></a>
+                </td>
+                <td>
+                  <a (click)="deleteTaskModal(deleteTaskTemplate)" id="delete" data-toggle="tooltip" title="Delete"><img src="../../assets/delete.png"></a>
+                </td>
+              </tr>
+          </tbody>
+      </table>
+    </div>
+  </tab>
+  <tab heading="Completed" class="mt-2" (selectTab)="onSelect($event)">
+    <h4>Completed Tasks</h4>
+    <div>
+      <table class="table table-hover table-bordered">
+          <thead class="thead-dark">
+              <tr>
+                <th scope="col">Task No:</th>
+                <th scope="col">Task Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Completed</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>John</td>
+                <td>Test</td>
+                <td>
+                  <input type="checkbox">
+                </td>
+                <td>
+                  <a href="/Dashboard"><img src="../../assets/edit.png" data-toggle="tooltip" data-placement="top" title="Edit"></a>
+                </td>
+                <td>
+                  <a href="/Dashboard" id="delete" data-toggle="tooltip" data-placement="top" title="Delete"><img src="../../assets/delete.png"></a>
+                </td>
+              </tr>
+          </tbody>
+      </table>
+    </div>
+  </tab>
+</tabset>
