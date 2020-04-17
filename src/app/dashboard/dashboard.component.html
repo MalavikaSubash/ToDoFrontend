@@ -61,13 +61,13 @@
 <app-header></app-header>
 
 <!-- Choose Task Date -->
-<div class="col-xs-12 col-12 col-md-4 form-group">
-    <input id="date" type="text" bsDatepicker (change)="getDate()"
-           placeholder="Choose Task Date" [(ngModel)]="datepickerModel"
+<div class="col-xs-12 col-12 col-md-4 form-group" (click)="getDate(date)">
+    <input id="date" type="text" bsDatepicker
+           placeholder="Choose Task Date" [(ngModel)]="date"
            value="datepickerModel" name="datepickerModel">
 </div>
 
-<!-- <button id="go" class="btn btn-success" (click)="chosenDate()">Go</button> -->
+<!-- <button id="go" class="btn btn-success" (click)="getDate()">Go</button> -->
 
 <!-- Show Chosen Task Date -->
 <div class="row">

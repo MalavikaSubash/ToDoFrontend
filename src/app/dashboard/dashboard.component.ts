@@ -32,16 +32,16 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  getDate(date) {
+    console.log(date);
+  }
+
   onSubmit() {
     console.log(this.myFormGroup.value);
   }
 
   onSelect(data: TabDirective): void {
     this.value = data.heading;
-  }
-
-  chosenDate() {
-    console.log(this.datepickerModel);
   }
 
   newTaskModal(newTaskTemplate: TemplateRef<any>) {

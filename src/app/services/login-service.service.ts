@@ -12,7 +12,9 @@ api: string = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
-  signIn(userDetails: UserDetails) {
-    return this.http.put('api/Login/' + userDetails, {}, {});
+  logIn(userDetails: UserDetails) {
+    return this.http.put('api/Login/', userDetails, {
+      headers: new HttpHeaders().append('Content-Type', 'application/json')
+    });
   }
 }

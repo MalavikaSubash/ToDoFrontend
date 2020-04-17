@@ -14,14 +14,14 @@ export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    this.storage = JSON.parse(sessionStorage.getItem('userDetails'));
+    this.storage = JSON.parse(sessionStorage.getItem('userData'));
     this.FullName = this.storage.firstName;
     this.imageUrl = this.storage.photoUrl;
   }
 
   signOut() {
     this.authService.signOut().then(data => {
-      sessionStorage.removeItem('userDetails');
+      sessionStorage.removeItem('userData');
       this.router.navigate(['/Login']);
     });
   }
