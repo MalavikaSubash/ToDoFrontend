@@ -61,19 +61,13 @@
 <app-header></app-header>
 
 <!-- Choose Task Date -->
-<div class="col-xs-12 col-12 col-md-4 form-group" (click)="getDate(date)">
+<div class="col-xs-12 col-12 col-md-4 form-group">
     <input id="date" type="text" bsDatepicker
-           placeholder="Choose Task Date" [(ngModel)]="date"
+           placeholder="Choose Task Date" [(ngModel)]="selectedDate"
+           (ngModelChange)="getDate($event)"
+           [bsConfig]="{ adaptivePosition: true, 
+            dateInputFormat:'YYYY-MM-DD'}"
            value="datepickerModel" name="datepickerModel">
-</div>
-
-<!-- <button id="go" class="btn btn-success" (click)="getDate()">Go</button> -->
-
-<!-- Show Chosen Task Date -->
-<div class="row">
-  <div class="col-xs-12 col-md-12">
-    <pre class="code-preview">{{datepickerModel}}</pre>
-  </div>
 </div>
 
 <button id="newTask" class="btn btn-success" (click)="newTaskModal(newTaskTemplate)" data-toggle="modal" data-target="#newTaskModal">New Task</button>
@@ -85,7 +79,7 @@
       <table class="table table-hover table-bordered">
           <thead class="thead-dark">
               <tr>
-                <th scope="col">Task No:</th>
+                <!-- <th scope="col">Task No:</th> -->
                 <th scope="col">Task Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Completed</th>
@@ -94,10 +88,10 @@
               </tr>
           </thead>
           <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
+              <tr *ngFor="let i of pendingTasks">
+                <!-- <th scope="row"></th> -->
+                <td>{{ i.taskName }}</td>
+                <td>{{ i.taskDescription }}</td>
                 <td>
                   <input type="checkbox">
                 </td>
@@ -118,7 +112,7 @@
       <table class="table table-hover table-bordered">
           <thead class="thead-dark">
               <tr>
-                <th scope="col">Task No:</th>
+                <!-- <th scope="col">Task No:</th> -->
                 <th scope="col">Task Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Completed</th>
@@ -127,10 +121,10 @@
               </tr>
           </thead>
           <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>John</td>
-                <td>Test</td>
+              <tr *ngFor="let i of completedTasks">
+                <!-- <th scope="row"></th> -->
+                <td>{{ i.taskName }}</td>
+                <td>{{ i.taskDescription }}</td>
                 <td>
                   <input type="checkbox">
                 </td>

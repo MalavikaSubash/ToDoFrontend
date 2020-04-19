@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { GetTasks } from '../models/getTasks';
 
 @Injectable({
   providedIn: 'root'
@@ -11,20 +12,15 @@ export class TaskServiceService {
 
   constructor(private http: HttpClient) { }
 
-  getTasks(userId: number, taskDate: Date, taskStatus: string) {
-    const data: any = {
-      id: userId,
-      date: taskDate,
-      status: taskStatus
-    };
-    return this.http.get('​/api​/Tasks' + data, {} );
+  getTasks(taskModel: GetTasks) {
+    return this.http.post(this.api + '/api/Tasks/Dashboard', taskModel);
   }
 
   updateStatus(taskId: number, status: string) {
-    return this.http.put('/api/Tasks' + taskId, status);
+    return this.http.put(this.api + '/Tasks/' + taskId, status);
   }
 
   deleteTask(taskId: number) {
-    return this.http.delete('/api/Tasks' + taskId, {});
+    return this.http.delete(this.api + '/Tasks/' + taskId);
   }
 }

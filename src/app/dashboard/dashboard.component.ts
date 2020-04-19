@@ -1,8 +1,9 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AuthService } from 'angularx-social-login';
-import { Router } from '@angular/router';
 import { BsModalService, BsModalRef, TabDirective } from 'ngx-bootstrap';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { TaskServiceService } from '../services/task-service.service';
+import { GetTasks } from '../models/getTasks';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,19 +12,29 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 })
 export class DashboardComponent implements OnInit {
 
+  taskModel: GetTasks;
   datepickerModel: any;
   modalRef: BsModalRef;
   value: string;
   myFormGroup: FormGroup;
-
-  selectedDate: any;
+  today: any;
+  taskDate: any;
+  user: any;
+  userId: number;
+  completedTasks: any;
+  pendingTasks: any;
 
   constructor(public OAuth: AuthService,
-              private router: Router,
+              private taskService: TaskServiceService,
               private modalService: BsModalService) {
   }
 
   ngOnInit() {
+    this.today = new Date();
+    this.taskDate = this.today;
+    this.getPendingTasks();
+    this.getCompletedTasks();
+
     this.myFormGroup = new FormGroup({
       taskName: new FormControl('', Validators.required),
       taskDescription: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -32,8 +43,40 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getDate(date) {
-    console.log(date);
+  getDate(taskDate) {
+    this.taskDate = new Date(taskDate);
+    this.getPendingTasks();
+    this.getCompletedTasks();
+  }
+
+  getPendingTasks() {
+    this.user = JSON.parse(sessionStorage.getItem('userData'));
+    this.userId = this.user.userId;
+
+    this.taskModel = {
+      userId: this.userId,
+      taskDate: this.taskDate,
+      Status: 'Pending'
+    };
+
+    this.taskService.getTasks(this.taskModel).subscribe(pendingTasks => {
+      this.pendingTasks = pendingTasks;
+    });
+  }
+
+  getCompletedTasks() {
+    this.user = JSON.parse(sessionStorage.getItem('userData'));
+    this.userId = this.user.userId;
+
+    this.taskModel = {
+      userId: this.userId,
+      taskDate: this.taskDate,
+      Status: 'Completed'
+    };
+
+    this.taskService.getTasks(this.taskModel).subscribe(completedTasks => {
+      this.completedTasks = completedTasks;
+    });
   }
 
   onSubmit() {

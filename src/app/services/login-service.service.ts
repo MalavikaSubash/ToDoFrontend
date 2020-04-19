@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { UserDetails } from '../models/UserDetails';
 
@@ -13,6 +13,6 @@ api: string = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
   logIn(userDetails: UserDetails) {
-    return this.http.put(this.api + 'api/Login/', userDetails);
+    return this.http.put(this.api + '/api/Login/', userDetails);
   }
 }
