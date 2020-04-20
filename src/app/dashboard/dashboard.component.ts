@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
   userId: number;
   completedTasks: any;
   pendingTasks: any;
+  deleteTaskId: number;
 
   constructor(public OAuth: AuthService,
               private taskService: TaskServiceService,
@@ -47,6 +48,10 @@ export class DashboardComponent implements OnInit {
     this.taskDate = new Date(taskDate);
     this.getPendingTasks();
     this.getCompletedTasks();
+  }
+
+  onSelect(data: TabDirective): void {
+    this.value = data.heading;
   }
 
   getPendingTasks() {
@@ -83,15 +88,37 @@ export class DashboardComponent implements OnInit {
     console.log(this.myFormGroup.value);
   }
 
-  onSelect(data: TabDirective): void {
-    this.value = data.heading;
-  }
-
   newTaskModal(newTaskTemplate: TemplateRef<any>) {
     this.modalRef = this.modalService.show(newTaskTemplate);
   }
 
-  deleteTaskModal(deleteTaskTemplate: TemplateRef<any>) {
+  updateAsCompleted(taskId: number) {
+    this.taskService.updateStatus(taskId, 'Completed').subscribe(response => {
+      console.log('Updated as completed !', response);
+      this.getCompletedTasks();
+      this.getPendingTasks();
+    });
+  }
+
+  updatedAsPending(taskId: number) {
+    this.taskService.updateStatus(taskId, 'Pending').subscribe(response => {
+      console.log('Updated as Pending !', response);
+      this.getCompletedTasks();
+      this.getPendingTasks();
+    });
+  }
+
+  deleteTaskModal(deleteTaskTemplate: TemplateRef<any>, taskId: number) {
     this.modalRef = this.modalService.show(deleteTaskTemplate);
+    this.deleteTaskId = taskId;
+  }
+
+  deleteTask() {
+    this.taskService.deleteTask(this.deleteTaskId).subscribe(result => {
+      console.log('Task deleted', this.deleteTaskId);
+      this.modalRef.hide();
+      this.getCompletedTasks();
+      this.getPendingTasks();
+    });
   }
 }

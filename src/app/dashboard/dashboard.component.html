@@ -52,7 +52,7 @@
   </div>
   <div class="modal-body">
     <p>Are you sure you want to delete?</p>
-    <button id="yes" class="btn btn-success" (click)="modalRef.hide()">Yes</button>
+    <button id="yes" class="btn btn-success" (click)="deleteTask()">Yes</button>
     <button id="no" class="btn btn-danger" (click)="modalRef.hide()">No</button>
   </div>
 </ng-template>
@@ -93,13 +93,13 @@
                 <td>{{ i.taskName }}</td>
                 <td>{{ i.taskDescription }}</td>
                 <td>
-                  <input type="checkbox">
+                  <input type="checkbox" (click)="updateAsCompleted(i.taskId)">
                 </td>
                 <td>
                   <a (click)="newTaskModal(newTaskTemplate)" data-toggle="modal" data-target="#newTaskModal"><img src="../../assets/edit.png" data-toggle="tooltip" title="Edit"></a>
                 </td>
                 <td>
-                  <a (click)="deleteTaskModal(deleteTaskTemplate)" id="delete" data-toggle="tooltip" title="Delete"><img src="../../assets/delete.png"></a>
+                  <a (click)="deleteTaskModal(deleteTaskTemplate, i.taskId)" id="delete" data-toggle="tooltip" title="Delete"><img src="../../assets/delete.png"></a>
                 </td>
               </tr>
           </tbody>
@@ -126,13 +126,13 @@
                 <td>{{ i.taskName }}</td>
                 <td>{{ i.taskDescription }}</td>
                 <td>
-                  <input type="checkbox">
+                  <input type="checkbox" data-bind="checked" checked>
                 </td>
                 <td>
                   <a href="/Dashboard"><img src="../../assets/edit.png" data-toggle="tooltip" data-placement="top" title="Edit"></a>
                 </td>
                 <td>
-                  <a href="/Dashboard" id="delete" data-toggle="tooltip" data-placement="top" title="Delete"><img src="../../assets/delete.png"></a>
+                  <a (click)="deleteTaskModal(deleteTaskTemplate, i.taskId)" id="delete" data-toggle="tooltip" title="Delete"><img src="../../assets/delete.png"></a>
                 </td>
               </tr>
           </tbody>

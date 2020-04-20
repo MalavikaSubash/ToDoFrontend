@@ -17,10 +17,10 @@ export class TaskServiceService {
   }
 
   updateStatus(taskId: number, status: string) {
-    return this.http.put(this.api + '/Tasks/' + taskId, status);
+    return this.http.put(this.api + '/api/Tasks/update/' + taskId, status);
   }
 
   deleteTask(taskId: number) {
-    return this.http.delete(this.api + '/Tasks/' + taskId);
+    return this.http.put(this.api + '/api/Tasks/delete/' + taskId, {});
   }
 }
