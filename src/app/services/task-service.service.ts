@@ -21,6 +21,11 @@ export class TaskServiceService {
     return this.http.put(this.api + '/api/Tasks/update', statusModel);
   }
 
+  addTask(newTask: any) {
+    console.log(newTask);
+    return this.http.post(this.api + '/api/Tasks', newTask);
+  }
+
   deleteTask(taskId: number) {
     return this.http.put(this.api + '/api/Tasks/delete/' + taskId, {});
   }

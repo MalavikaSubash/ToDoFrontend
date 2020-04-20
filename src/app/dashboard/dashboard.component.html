@@ -14,23 +14,23 @@
     <form [formGroup]="myFormGroup" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="text">Task Name:  </label>
-        <input type="text" class="form-control" id="taskName" formControlName="taskName">
+        <input type="text" class="form-control" id="Name" formControlName="Name">
       </div>
       <div class="form-group">
         <label for="text">Description:  </label>
-        <input type="text" class="form-control" id="taskDescription" formControlName="taskDescription">
+        <input type="text" class="form-control" id="Description" formControlName="Description">
       </div>
       <div class="col-xs-12 col-12 col-md-4 form-group">
         <label for="text">Date:</label>
-        <input type="text" bsDatepicker class="form-control" id="taskDate" formControlName="taskDate">
+        <input type="text" bsDatepicker class="form-control" 
+                id="Date" formControlName="Date">
       </div>
       <div class="form-group">
         <label for="text">Assign Task to:  </label>
-        <input type="text" class="form-control" id="taskEmail" placeholder="Enter Google email ID" formControlName="taskEmail">
+        <input type="text" class="form-control" id="Email" placeholder="Enter Google email ID" formControlName="Email">
       </div>
       <br>
-      <button id="SubmitTask" type="submit" class="btn btn-success" 
-              [disabled]="!myFormGroup.valid">
+      <button id="addBtn" type="submit" class="btn btn-success">
               Submit
       </button>
       <button type="button" id="CancelTask" class="btn btn-danger" (click)="modalRef.hide()">Cancel</button>
@@ -38,6 +38,7 @@
   </div>
 </ng-template>
 
+<!-- Delete Task Modal -->
 <ng-template #deleteTaskTemplate>
   <div class="modal-header" data-backdrop="static">
     <h4 class="modal-title pull-left">Delete Task</h4>
@@ -57,7 +58,6 @@
   </div>
 </ng-template>
 
-
 <app-header></app-header>
 
 <!-- Choose Task Date -->
@@ -66,8 +66,7 @@
            placeholder="Choose Task Date" [(ngModel)]="selectedDate"
            (ngModelChange)="getDate($event)"
            [bsConfig]="{ adaptivePosition: true, 
-            dateInputFormat:'YYYY-MM-DD'}"
-           value="datepickerModel" name="datepickerModel">
+            dateInputFormat:'YYYY-MM-DD'}">
 </div>
 
 <button id="newTask" class="btn btn-success" (click)="newTaskModal(newTaskTemplate)" data-toggle="modal" data-target="#newTaskModal">New Task</button>
@@ -83,8 +82,8 @@
                 <th scope="col">Task Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Completed</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <th scope="col">Edit</th>
+                <th scope="col">Remove</th>
               </tr>
           </thead>
           <tbody>
@@ -116,8 +115,8 @@
                 <th scope="col">Task Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Completed</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <th scope="col">Edit</th>
+                <th scope="col">Remove</th>
               </tr>
           </thead>
           <tbody>

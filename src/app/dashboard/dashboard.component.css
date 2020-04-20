@@ -47,25 +47,25 @@ img {
     margin-top: 20px;
 }
 
-#taskName {
+#Name {
     margin-left: 47px; 
     height: 25px;
     width: 200px;
 }
 
-#taskDescription {
+#Description {
     margin-left: 44px; 
     height: 25px;
     width: 200px;
 }
 
-#taskDate {
+#Date {
     margin-left: 78px; 
     height: 25px;
     width: 200px;
 }
 
-#taskEmail {
+#Email {
     width: 200px;
     height: 25px;
     margin-left: 29px;
@@ -78,7 +78,7 @@ img {
 
 #CancelTask {
     margin-left: 20px;
-    margin-top: 11px;
+    margin-top: 2px;
 }
 
 #go {

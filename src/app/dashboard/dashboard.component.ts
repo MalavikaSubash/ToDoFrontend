@@ -39,10 +39,24 @@ export class DashboardComponent implements OnInit {
     this.getCompletedTasks();
 
     this.myFormGroup = new FormGroup({
-      taskName: new FormControl('', Validators.required),
-      taskDescription: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-      taskDate: new FormControl('', Validators.required),
-      taskEmail: new FormControl('', [Validators.required, Validators.email, Validators.pattern('/gmail/')])
+      Name: new FormControl('', Validators.required),
+      Description: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      Date: new FormControl('', Validators.required),
+      Email: new FormControl('', [Validators.required, Validators.email])
+    });
+  }
+
+  newTaskModal(newTaskTemplate: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(newTaskTemplate);
+  }
+
+  onSubmit() {
+    console.log(this.myFormGroup.value);
+    this.taskService.addTask(this.myFormGroup.value).subscribe(response => {
+      alert('New task added !');
+      this.getPendingTasks();
+      this.getCompletedTasks();
+      this.modalRef.hide();
     });
   }
 
@@ -84,14 +98,6 @@ export class DashboardComponent implements OnInit {
     this.taskService.getTasks(this.taskModel).subscribe(completedTasks => {
       this.completedTasks = completedTasks;
     });
-  }
-
-  onSubmit() {
-    console.log(this.myFormGroup.value);
-  }
-
-  newTaskModal(newTaskTemplate: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(newTaskTemplate);
   }
 
   updateAsCompleted(id: number) {
