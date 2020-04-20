@@ -126,7 +126,7 @@
                 <td>{{ i.taskName }}</td>
                 <td>{{ i.taskDescription }}</td>
                 <td>
-                  <input type="checkbox" data-bind="checked" checked>
+                  <input type="checkbox" (click)="updateAsPending(i.taskId)" data-bind="checked" checked>
                 </td>
                 <td>
                   <a href="/Dashboard"><img src="../../assets/edit.png" data-toggle="tooltip" data-placement="top" title="Edit"></a>

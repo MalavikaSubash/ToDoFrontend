@@ -4,6 +4,7 @@ import { BsModalService, BsModalRef, TabDirective } from 'ngx-bootstrap';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { TaskServiceService } from '../services/task-service.service';
 import { GetTasks } from '../models/getTasks';
+import { UpdateStatus } from '../models/UpdateStatus';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,6 +25,7 @@ export class DashboardComponent implements OnInit {
   completedTasks: any;
   pendingTasks: any;
   deleteTaskId: number;
+  statusModel: UpdateStatus;
 
   constructor(public OAuth: AuthService,
               private taskService: TaskServiceService,
@@ -92,17 +94,23 @@ export class DashboardComponent implements OnInit {
     this.modalRef = this.modalService.show(newTaskTemplate);
   }
 
-  updateAsCompleted(taskId: number) {
-    this.taskService.updateStatus(taskId, 'Completed').subscribe(response => {
-      console.log('Updated as completed !', response);
+  updateAsCompleted(id: number) {
+    this.statusModel = {
+      taskId: id,
+      status: 'Completed'
+    };
+    this.taskService.updateStatus(this.statusModel).subscribe(response => {
       this.getCompletedTasks();
       this.getPendingTasks();
     });
   }
 
-  updatedAsPending(taskId: number) {
-    this.taskService.updateStatus(taskId, 'Pending').subscribe(response => {
-      console.log('Updated as Pending !', response);
+  updateAsPending(id: number) {
+    this.statusModel = {
+      taskId: id,
+      status: 'Pending'
+    };
+    this.taskService.updateStatus(this.statusModel).subscribe(response => {
       this.getCompletedTasks();
       this.getPendingTasks();
     });

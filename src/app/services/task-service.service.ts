@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { GetTasks } from '../models/getTasks';
+import { UpdateStatus } from '../models/UpdateStatus';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class TaskServiceService {
     return this.http.post(this.api + '/api/Tasks/Dashboard', taskModel);
   }
 
-  updateStatus(taskId: number, status: string) {
-    return this.http.put(this.api + '/api/Tasks/update/' + taskId, status);
+  updateStatus(statusModel: UpdateStatus) {
+    return this.http.put(this.api + '/api/Tasks/update', statusModel);
   }
 
   deleteTask(taskId: number) {
