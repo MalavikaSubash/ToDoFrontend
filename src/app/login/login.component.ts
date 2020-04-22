@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GoogleLoginProvider, AuthService } from 'angularx-social-login';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { UserDetails } from '../models/UserDetails';
 import { LoginServiceService } from '../services/login-service.service';
 
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit {
 
   constructor(public OAuth: AuthService,
               private router: Router,
+              private spinner: NgxSpinnerService,
               private loginService: LoginServiceService) { }
 
   ngOnInit() {
@@ -23,6 +25,7 @@ export class LoginComponent implements OnInit {
   public signInWithGoogle(socialProvider: string) {
     const socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
     this.OAuth.signIn(socialPlatformProvider).then(result => {
+      this.spinner.show();
       this.userDetails = {
         userName: result.name,
         email: result.email
@@ -31,6 +34,7 @@ export class LoginComponent implements OnInit {
       this.loginService.logIn(this.userDetails).subscribe(resultData => {
         sessionStorage.setItem('userData', JSON.stringify(resultData));
         this.router.navigate(['/Dashboard']);
+        this.spinner.hide();
       });
     });
   }

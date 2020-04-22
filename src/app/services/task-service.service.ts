@@ -22,8 +22,11 @@ export class TaskServiceService {
   }
 
   addTask(newTask: any) {
-    console.log(newTask);
     return this.http.post(this.api + '/api/Tasks', newTask);
+  }
+
+  editTask(taskId: number, newTask: any) {
+    return this.http.put(this.api + '/api/Tasks/' + taskId, newTask);
   }
 
   deleteTask(taskId: number) {

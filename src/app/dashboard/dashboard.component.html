@@ -11,29 +11,35 @@
     </button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="myFormGroup" (ngSubmit)="onSubmit()">
+    <form [formGroup]="myFormGroup" novalidate (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="text">Task Name:  </label>
-        <input type="text" class="form-control" id="Name" formControlName="Name">
+        <input type="text" class="form-control" id="Name"
+              formControlName="Name" required>
       </div>
       <div class="form-group">
         <label for="text">Description:  </label>
-        <input type="text" class="form-control" id="Description" formControlName="Description">
+        <input type="text" class="form-control" id="Description" 
+                formControlName="Description" required maxlength="50">
       </div>
       <div class="col-xs-12 col-12 col-md-4 form-group">
         <label for="text">Date:</label>
-        <input type="text" bsDatepicker class="form-control" 
-                id="Date" formControlName="Date">
+        <input type="text" bsDatepicker class="form-control" #data
+                [(ngModel)]="taskDate" (ngModelChange)="formDate($event)"
+                id="Date" formControlName="Date" required>
       </div>
       <div class="form-group">
         <label for="text">Assign Task to:  </label>
-        <input type="text" class="form-control" id="Email" placeholder="Enter Google email ID" formControlName="Email">
+        <input type="text" class="form-control" id="Email" required email
+                placeholder="Enter Google email ID" formControlName="Email">
       </div>
       <br>
-      <button id="addBtn" type="submit" class="btn btn-success">
+      <button id="addBtn" [disabled]="myFormGroup.invalid" type="submit" class="btn btn-success">
               Submit
       </button>
-      <button type="button" id="CancelTask" class="btn btn-danger" (click)="modalRef.hide()">Cancel</button>
+      <button type="button" id="CancelTask" class="btn btn-danger" (click)="modalRef.hide()">
+              Cancel
+      </button>
     </form>
   </div>
 </ng-template>
@@ -62,9 +68,8 @@
 
 <!-- Choose Task Date -->
 <div class="col-xs-12 col-12 col-md-4 form-group">
-    <input id="date" type="text" bsDatepicker
-           placeholder="Choose Task Date" [(ngModel)]="selectedDate"
-           (ngModelChange)="getDate($event)"
+    <input id="date" type="text" bsDatepicker placeholder="Choose Task Date"
+           [(ngModel)]="selectedDate" (ngModelChange)="getDate($event)"
            [bsConfig]="{ adaptivePosition: true, 
             dateInputFormat:'YYYY-MM-DD'}">
 </div>
@@ -95,7 +100,7 @@
                   <input type="checkbox" (click)="updateAsCompleted(i.taskId)">
                 </td>
                 <td>
-                  <a (click)="newTaskModal(newTaskTemplate)" data-toggle="modal" data-target="#newTaskModal"><img src="../../assets/edit.png" data-toggle="tooltip" title="Edit"></a>
+                  <a (click)="editTaskModal(newTaskTemplate, i)" data-toggle="modal" data-target="#newTaskModal"><img src="../../assets/edit.png" data-toggle="tooltip" title="Edit"></a>
                 </td>
                 <td>
                   <a (click)="deleteTaskModal(deleteTaskTemplate, i.taskId)" id="delete" data-toggle="tooltip" title="Delete"><img src="../../assets/delete.png"></a>

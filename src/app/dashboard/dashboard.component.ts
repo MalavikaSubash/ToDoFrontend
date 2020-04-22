@@ -24,7 +24,9 @@ export class DashboardComponent implements OnInit {
   userId: number;
   completedTasks: any;
   pendingTasks: any;
-  deleteTaskId: number;
+  selectedTaskId: number;
+  selectedTask: any;
+  selectedDate: any;
   statusModel: UpdateStatus;
 
   constructor(public OAuth: AuthService,
@@ -46,17 +48,49 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  editTaskModal(newTaskTemplate: TemplateRef<any>, task: any) {
+    this.modalRef = this.modalService.show(newTaskTemplate);
+    this.selectedTask = task;
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    const email = user.email;
+    this.myFormGroup.patchValue({
+      Name: this.selectedTask.taskName,
+      Description: this.selectedTask.taskDescription,
+      Date: new Date(this.selectedTask.taskDate),
+      Email: email
+    });
+  }
+
   newTaskModal(newTaskTemplate: TemplateRef<any>) {
     this.modalRef = this.modalService.show(newTaskTemplate);
   }
 
   onSubmit() {
-    console.log(this.myFormGroup.value);
-    this.taskService.addTask(this.myFormGroup.value).subscribe(response => {
-      alert('New task added !');
-      this.getPendingTasks();
-      this.getCompletedTasks();
-      this.modalRef.hide();
+    if (this.myFormGroup.valid) {
+      if (this.selectedTask) {
+        this.taskService.editTask(this.selectedTask.taskId, this.myFormGroup.value).subscribe(Reponse => {
+          console.log('Task details edited !');
+        });
+        this.getCompletedTasks();
+        this.getPendingTasks();
+      } else {
+        this.taskService.addTask(this.myFormGroup.value).subscribe(Response => {
+          alert('New task added !');
+          this.getCompletedTasks();
+          this.getPendingTasks();
+          this.modalRef.hide();
+        });
+      }
+    } else {
+      alert('Please enter all the details');
+    }
+    this.modalRef.hide();
+  }
+
+  formDate(data) {
+    this.selectedDate = new Date(data);
+    this.myFormGroup.patchValue({
+      Date: this.selectedDate
     });
   }
 
@@ -124,12 +158,12 @@ export class DashboardComponent implements OnInit {
 
   deleteTaskModal(deleteTaskTemplate: TemplateRef<any>, taskId: number) {
     this.modalRef = this.modalService.show(deleteTaskTemplate);
-    this.deleteTaskId = taskId;
+    this.selectedTaskId = taskId;
   }
 
   deleteTask() {
-    this.taskService.deleteTask(this.deleteTaskId).subscribe(result => {
-      console.log('Task deleted', this.deleteTaskId);
+    this.taskService.deleteTask(this.selectedTaskId).subscribe(result => {
+      console.log('Task deleted', this.selectedTaskId);
       this.modalRef.hide();
       this.getCompletedTasks();
       this.getPendingTasks();
