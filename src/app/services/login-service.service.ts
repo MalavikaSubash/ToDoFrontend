@@ -8,7 +8,7 @@ import { UserDetails } from '../models/UserDetails';
 })
 export class LoginServiceService {
 
-api: string = environment.apiUrl;
+  api: string = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 

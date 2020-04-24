@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { GetTasks } from '../models/getTasks';
 import { UpdateStatus } from '../models/UpdateStatus';
+import { EmailModel } from '../models/EmailModel';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,9 @@ export class TaskServiceService {
 
   deleteTask(taskId: number) {
     return this.http.put(this.api + '/api/Tasks/delete/' + taskId, {});
+  }
+
+  sendEmail(emailContent: EmailModel) {
+    return this.http.post(this.api + '/api/Email', emailContent);
   }
 }

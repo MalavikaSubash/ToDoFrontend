@@ -1,3 +1,9 @@
+#backgroundImage {
+    width: 1348px;
+    height: 656px;
+    margin-bottom: -630px;
+}
+
 #newTask {
     margin-left: 90%;
     margin-top: -105px;
@@ -84,8 +90,6 @@ img {
     margin-top: -66px;
 }
 
-#go {
-    margin-left: 270px;
-    margin-top: -99px;
-    width: 56px;
+tbody {
+    background-color: white;
 }
