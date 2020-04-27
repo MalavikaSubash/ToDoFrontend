@@ -149,6 +149,7 @@ export class DashboardComponent implements OnInit {
 
   newTaskModal(newTaskTemplate: TemplateRef<any>) {
     this.modalRef = this.modalService.show(newTaskTemplate);
+    this.myFormGroup.reset();
   }
 
   editTaskModal(newTaskTemplate: TemplateRef<any>, task: any) {
